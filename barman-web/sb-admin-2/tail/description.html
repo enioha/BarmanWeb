@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en_US" xml:lang="en_US">
+<!--
+ * Created on 16.12.2005
+-->
+ <head>
+  <title>Description for class tail - using the showfile Example</title>
+ </head>
+ <body>
+ <h1>Usage-Description</h1>
+ <p>This class can be used to 'tail' files.
+ It's usage is not limited to *nix systems or access to the tail-command.
+ You only have to have the permission to read the specified file. The class features the command 'grep' with that you can filter the output by keyword or regular expression.
+ Take into account that some php-settings, like safemode and openbasedir, limit access to system-files.</p>
+ <h2>USAGE:</h2>
+ <code>
+ require_once("class.tail.php");<br/>
+ $tailfile = isset($_REQUEST['file'])?urldecode($_REQUEST['file']):"./mail";<br/>
+ $mytail = new tail($tailfile);<br/><br/>
+ </code><p>instanciate new object of tail with name of file to tail</p><code>
+ if (isset($_REQUEST['grep'])) {<br/>
+&nbsp;&nbsp;&nbsp;$mytail->setGrep($_REQUEST['grep']);
+ </code><p>set grep-keyword. for further usage of grep-feature, please read the comments in the code :)</p><code>
+  }<br/><br/>
+if (isset($_REQUEST['show']) && is_numeric($_REQUEST['show'])){<br/>
+&nbsp;&nbsp;&nbsp;$mytail->setNumberOfLines($_REQUEST['show']);
+ </code><p>limit the lines to look at. if output is grep'ed, the grep only filters the last <i>n</i> lines, so the output would be less than that number of lines.</p><code>
+}<br/><br/>
+echo $mytail->output(HIGHLIGHT_BOLD+OL_LIST);</code>
+ <p>get output.<br/>
+ the class defines following constants:
+ <ul>
+  	<li>HIGHLIGHT_NOT - do not highlight grep-word</li>
+	<li>HIGHLIGHT_SPAN - highlight with &lt;span class="highlight"&gt;grep-word&lt;/span&gt;</li>
+	<li>HIGHLIGHT_BOLD - highlight with &lt;b&gt;grep-word&lt;/b&gt;</li>
+	<li>HIGHLIGHT_ASTERISK - highlight with *grep-word*</li>
+ </ul>
+ <ul>
+	<li>PLAIN - plain output (with \n at EOL)</li>
+	<li>BREAKS - a &lt;br/&gt; at each EOL</li>
+	<li>PARAGRAPH - split with paragraphs</li>
+	<li>UL_LIST - split in an unordered list</li>
+	<li>OL_LIST - split in an ordered list</li>
+	<li>XML - ouput XML with &lt;list&gt;&lt;line&gt;content of line&lt;/line&gt;&lt;/list&gt;</li>
+ </ul>
+ e.g. a bold highlighting with lines seperated by breaks is BREAKS+HIGHLIGHT_BOLD
+ </p>
+ <p>further extensions are in planning.</p>
+ <p>I hope you find this class useful. For any hints and suggestions contact me at <a href="http://www.phpclasses.org/browse/author/142357.html">phpclasses.org</a></p>
+ </body>
+</html>
